@@ -19,8 +19,22 @@ package es.itrafa.ev1_u4.fase1_b11.prog_ev1_u4_b11_e3;
  *      }
  * }
  */
-public class Unidad4 {
-    public static void main (String[] args){
-        
+class Unidad4{
+    public static void main(String[] args){
+        int[] nums= {7, 10, 3, 34, 13};
+        int min , max;
+
+        max = min =nums[0];
+        for (int i= 0; i<nums.length; i++){
+            if(min > nums[i]){
+                min = nums[i];
+            }
+            if(max < nums[i]){
+                max = nums[i];
+            }
+        }
+        System.out.println("min = "+ min);
+        System.out.println("max = "+ max);
+
     }
 }

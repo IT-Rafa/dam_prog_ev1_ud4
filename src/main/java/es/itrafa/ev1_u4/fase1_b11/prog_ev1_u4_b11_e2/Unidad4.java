@@ -29,6 +29,17 @@ class Unidad4{
         nums[3]=34;
         nums[4]=13;
 
+        max = min =nums[0];
+        for (int i= 0; i<nums.length; i++){
+            if(min > nums[i]){
+                min = nums[i];
+            }
+            if(max < nums[i]){
+                max = nums[i];
+            }
+        }
+        System.out.println("min = "+ min);
+        System.out.println("max = "+ max);
 
     }
 }

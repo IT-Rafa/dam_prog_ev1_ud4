@@ -25,6 +25,13 @@ package es.itrafa.ev1_u4.fase1_b11.prog_ev1_u4_b11_e5;
  */
 public class Unidad4 {
     public static void main (String[] args){
-        
+        boolean[] a = {false, false, true, true};
+        boolean[] b = {false, true, false, true};
+
+        System.out.println("A\t\tB\t\tAorB\tAandB\tAexorB\tAnandB");
+        for (int i = 0; i < a.length; i++){
+            System.out.println("" + (a[i]) + "\t" + (b[i]) + "\t" +
+                    (a[i] || b[i]) + "\t" + (a[i] && b[i])+ "\t" + (a[i] ^ b[i]) + "\t" + (!a[i] || !b[i]) );
+        }
     }
 }
