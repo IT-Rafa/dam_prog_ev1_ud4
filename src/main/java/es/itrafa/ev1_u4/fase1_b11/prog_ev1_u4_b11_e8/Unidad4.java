@@ -16,6 +16,14 @@ package es.itrafa.ev1_u4.fase1_b11.prog_ev1_u4_b11_e8;
  */
 public class Unidad4 {
     public static void main (String[] args){
-        
+        int []a = {1,2,3,4, 5};
+        int []b = new int[a.length];
+        for(int i=0; i< a.length; i++){
+            b[i] = a[i];
+            System.out.println("a["+ i +"]=" + a[i] + ": b["+ i +"]=" + b[i]);
+        }
+        System.out.println("a = " + System.identityHashCode(a));
+        System.out.println("b = " + System.identityHashCode(b));
+
     }
 }
