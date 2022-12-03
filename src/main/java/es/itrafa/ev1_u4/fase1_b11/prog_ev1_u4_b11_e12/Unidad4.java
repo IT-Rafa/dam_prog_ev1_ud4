@@ -1,5 +1,7 @@
 package es.itrafa.ev1_u4.fase1_b11.prog_ev1_u4_b11_e12;
 
+import java.util.Scanner;
+
 /**
  * Ejercicio U4_B11_E12
  * Modifica el ejercicio anterior de forma que funcione para un número indeterminado de
@@ -10,11 +12,29 @@ package es.itrafa.ev1_u4.fase1_b11.prog_ev1_u4_b11_e12;
  */
 public class Unidad4 {
     public static void main (String[] args){
-        Persona[] personas = new Persona[100];
+        Scanner sc = new Scanner(System.in);
+        int cant = 100;
+        Persona[] personas = new Persona[cant];
+        for(int i = 0; i < cant; i++){
+            System.out.print("Nombre: ");
+            String nombre = sc.nextLine();
 
+            if (nombre.toLowerCase().equals("fin")){
+                break;
+            }else{
+                System.out.print("Edad: ");
+                int edad = Integer.parseInt(sc.nextLine());
+                personas[i] = new Persona(nombre, edad);
+            }
+        }
+        for(Persona p:personas){
+            if (p == null){
+                break;
+            }
+            System.out.println(p.nombre + " " + p.edad);
+        }
     }
 }
-
 class Persona{
     String nombre;
     int edad;
