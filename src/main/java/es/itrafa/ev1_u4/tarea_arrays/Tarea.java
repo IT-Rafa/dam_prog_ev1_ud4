@@ -152,59 +152,104 @@ public class Tarea {
             gameData[i] = Integer.parseInt(input[i]);
         }
 
-        // CALCULO TIRADAS POR JUGADOR
-
+        // Calculamos máximo tiradas Defensor
         int maxTiradaDefensor = gameData[Data.DD.ordinal()];
         if (gameData[Data.TD.ordinal()] < gameData[Data.DD.ordinal()]) {
             maxTiradaDefensor = gameData[Data.TD.ordinal()];
         }
+        // Calculamos máximo tiradas Atacante
         int maxTiradaAtacante = gameData[Data.DA.ordinal()];
         if (gameData[Data.TA.ordinal()] < gameData[Data.DA.ordinal()]) {
             maxTiradaAtacante = gameData[Data.TA.ordinal()];
         }
-        int maxTiradaDefensorOleadas = maxTiradaDefensor * gameData[Data.NO.ordinal()];
-        int maxTiradaAtacanteOleadas = maxTiradaAtacante * gameData[Data.NO.ordinal()];
-        int tiradasTotales = maxTiradaDefensorOleadas + maxTiradaAtacanteOleadas;
-        System.out.println("1º Tirada Defensor: " + maxTiradaDefensor);
-        System.out.println("1º Tirada Atacante: " + maxTiradaAtacante);
+        // total máximo tiradas ambos jugadores en esta oleada
         int maxTirada = maxTiradaDefensor;
         if (maxTirada < maxTiradaAtacante) {
             maxTirada = maxTiradaAtacante;
         }
+
+        // Calculamos máximo tiradas totales
+        int maxTiradaDefensorOleadas = maxTiradaDefensor * gameData[Data.NO.ordinal()];
+        int maxTiradaAtacanteOleadas = maxTiradaAtacante * gameData[Data.NO.ordinal()];
+        int tiradasTotales = maxTiradaDefensorOleadas + maxTiradaAtacanteOleadas;
+
+        System.out.println("1º Tirada Defensor: " + maxTiradaDefensor);
+        System.out.println("1º Tirada Atacante: " + maxTiradaAtacante);
+
+
+        System.out.println("MAXIMO TIRADAS: " + maxTirada);
+        // total max tiradas jugadores en todas oleadas
         System.out.println("Tiradas TOTALES: " + tiradasTotales);
 
         // SEGUNDA LÍNEA ENTRADA (TIRADAS)
         // 4 5 3 4 2 1 5 6 5 5
-
+        // Cogemos input de tiradas y las separamos
         String[] inputTiradas = sc.nextLine().split(" ");
-        int[] tiradasDefensor = new int[maxTiradaDefensor];
 
-        for (int i = 0; i < tiradasDefensor.length; i++) {
-            tiradasDefensor[i] = Integer.parseInt(inputTiradas[i]);
-        }
-        int[] tiradasAtacante = new int[maxTiradaAtacante];
+        // CALCULO POR OLEADAS
+        int oleada = gameData[Data.NO.ordinal()];
+        while (oleada != 0){
+            int[] tiradasDefensor = new int[maxTirada];
+            int[] tiradasAtacante = new int[maxTirada];
 
-        int maximaTirada = maxTiradaDefensor;
+            // Convertimos en array tiradas para esta oleada del defensor
+            for (int i = 0; i < maxTirada; i++) {
+                if(i >= maxTiradaDefensor){
+                    tiradasDefensor[i] = 0;
+                }else{
+                    tiradasDefensor[i] = Integer.parseInt(inputTiradas[i]);
+                }
+            }
+            // Convertimos en array tiradas para esta oleada del Atacante
+            int indice = 0;
+            for (int i = maxTiradaDefensor; i < maxTiradaDefensor + maxTirada; i++) {
+                if(i >= maxTiradaDefensor + maxTiradaAtacante){
+                    tiradasAtacante[indice++] = 0;
+                }else{
+                    tiradasAtacante[indice++] = Integer.parseInt(inputTiradas[i]);
+                }
+            }
+            // Ordenamos array tirador y atacante - creciente
+            Arrays.sort(tiradasDefensor);
+            Arrays.sort(tiradasAtacante);
 
-        if(maximaTirada < maxTiradaAtacante){
-            maxTirada = maxTiradaAtacante;
-        }
+            // Reordenamos defensor a decreciente
+            for(int i = 0; i < maxTirada /2; i++){
+                int cambio = tiradasDefensor[tiradasDefensor.length -i-1];
+                tiradasDefensor[tiradasDefensor.length -i-1] = tiradasDefensor[i];
+                tiradasDefensor[i] = cambio;
+            }
+            // Reordenamos atacante a decreciente
+            for(int i = 0; i < maxTirada /2; i++){
+                int cambio = tiradasAtacante[tiradasAtacante.length -i-1];
+                tiradasAtacante[tiradasAtacante.length -i-1] = tiradasAtacante[i];
+                tiradasAtacante[i] = cambio;
+            }
+            System.out.println("TIRADA");
+            System.out.print("Defensor: ");
+            for(int i = 0; i < maxTirada; i++){
+                System.out.print(tiradasDefensor[i] + " ");
+            }
+            System.out.println();
+            System.out.print("Atacante: ");
+            for(int i = 0; i < maxTirada; i++){
+                System.out.print(tiradasAtacante[i] + " ");
+            }
+            System.out.println();
+            for(int i = 0; i < maxTirada; i++){
+                if(tiradasDefensor[i] == 0 || tiradasAtacante[i] == 0){
+                    System.out.println("Nulo");
+                }else if(tiradasDefensor[i] >= tiradasAtacante[i]){
+                    System.out.println("Defensor gana: Atacante tiene " + --gameData[Data.TA.ordinal()]);
+                }else{
+                    System.out.println("Atacante gana: Defensor tiene " + --gameData[Data.TD.ordinal()]);
+                }
+            }
 
-        int indice = 0;
-        for (int i = maxTiradaDefensor; i < maxTiradaDefensor + tiradasAtacante.length; i++) {
-            tiradasAtacante[indice++] = Integer.parseInt(inputTiradas[i]);
-        }
-        Arrays.sort(tiradasDefensor);
-        Arrays.sort(tiradasAtacante);
-        for(int i = 0; i < tiradasDefensor.length /2; i++){
-            int cambio = tiradasDefensor[tiradasDefensor.length -i-1];
-            tiradasDefensor[tiradasDefensor.length -i-1] = tiradasDefensor[i];
-            tiradasDefensor[i] = cambio;
-        }
-
-        for(int numbs:tiradasDefensor){
-            System.out.print("\t" + numbs);
+            oleada--;
         }
 
     }
 }
+// 2 3 3 3 3
+// 4 5 3 4 2 1 5 6 5 5
