@@ -1,5 +1,6 @@
 package es.itrafa.ev1_u4.tarea_arrays;
 
+import java.util.Arrays;
 import java.util.Scanner;
 
 /**
@@ -147,38 +148,63 @@ public class Tarea {
         int[] gameData = new int[Data.values().length];
 
         // pasamos a int y lo guardamos
-        for (int i = 0; i< gameData.length; i++) {
+        for (int i = 0; i < gameData.length; i++) {
             gameData[i] = Integer.parseInt(input[i]);
         }
 
         // CALCULO TIRADAS POR JUGADOR
 
         int maxTiradaDefensor = gameData[Data.DD.ordinal()];
-        if(gameData[Data.TD.ordinal()] < gameData[Data.DD.ordinal()]){
+        if (gameData[Data.TD.ordinal()] < gameData[Data.DD.ordinal()]) {
             maxTiradaDefensor = gameData[Data.TD.ordinal()];
         }
         int maxTiradaAtacante = gameData[Data.DA.ordinal()];
-        if(gameData[Data.TA.ordinal()] < gameData[Data.DA.ordinal()]){
+        if (gameData[Data.TA.ordinal()] < gameData[Data.DA.ordinal()]) {
             maxTiradaAtacante = gameData[Data.TA.ordinal()];
         }
         int maxTiradaDefensorOleadas = maxTiradaDefensor * gameData[Data.NO.ordinal()];
         int maxTiradaAtacanteOleadas = maxTiradaAtacante * gameData[Data.NO.ordinal()];
         int tiradasTotales = maxTiradaDefensorOleadas + maxTiradaAtacanteOleadas;
+        System.out.println("1º Tirada Defensor: " + maxTiradaDefensor);
+        System.out.println("1º Tirada Atacante: " + maxTiradaAtacante);
+        int maxTirada = maxTiradaDefensor;
+        if (maxTirada < maxTiradaAtacante) {
+            maxTirada = maxTiradaAtacante;
+        }
         System.out.println("Tiradas TOTALES: " + tiradasTotales);
-
 
         // SEGUNDA LÍNEA ENTRADA (TIRADAS)
         // 4 5 3 4 2 1 5 6 5 5
 
         String[] inputTiradas = sc.nextLine().split(" ");
-        int[] tiradas = new int[tiradasTotales];
+        int[] tiradasDefensor = new int[maxTiradaDefensor];
 
-        for (int i = 0; i< tiradas.length; i++) {
-            gameData[i] = Integer.parseInt(inputTiradas[i]);
+        for (int i = 0; i < tiradasDefensor.length; i++) {
+            tiradasDefensor[i] = Integer.parseInt(inputTiradas[i]);
+        }
+        int[] tiradasAtacante = new int[maxTiradaAtacante];
+
+        int maximaTirada = maxTiradaDefensor;
+
+        if(maximaTirada < maxTiradaAtacante){
+            maxTirada = maxTiradaAtacante;
         }
 
+        int indice = 0;
+        for (int i = maxTiradaDefensor; i < maxTiradaDefensor + tiradasAtacante.length; i++) {
+            tiradasAtacante[indice++] = Integer.parseInt(inputTiradas[i]);
+        }
+        Arrays.sort(tiradasDefensor);
+        Arrays.sort(tiradasAtacante);
+        for(int i = 0; i < tiradasDefensor.length /2; i++){
+            int cambio = tiradasDefensor[tiradasDefensor.length -i-1];
+            tiradasDefensor[tiradasDefensor.length -i-1] = tiradasDefensor[i];
+            tiradasDefensor[i] = cambio;
+        }
 
-
+        for(int numbs:tiradasDefensor){
+            System.out.print("\t" + numbs);
+        }
 
     }
 }
