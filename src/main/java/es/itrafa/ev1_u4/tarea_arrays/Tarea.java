@@ -1,5 +1,7 @@
 package es.itrafa.ev1_u4.tarea_arrays;
 
+import java.util.Scanner;
+
 /**
  * En el juego del Risk se conquistan territorios con una estrategia basada en dados.
  * Las batallas empiezan cuando el atacante mueve un determinado número de tropas al
@@ -77,12 +79,45 @@ package es.itrafa.ev1_u4.tarea_arrays;
  * Por ejemplo:
  * Entrada
  * <p>
+ * <p>
+ *  Defensor: 2 tropas: 2
+ *  Atacante: 3 tropas: 3
+ *  3 dados máximo para ambos jugadores: 3 3
+ * <p>
  * 2 3 3 3 3
+ * valores obtenidos por la defensa según oleada: 1ºol: 4 5   | 2ºol: 1 5 | 3ºol: 5
+ * valores obtenidos por el ataque según oleada:  1ºol: 3 4 2 | 2ºol: 6   | 3ºol: 5
  * 4 5 3 4 2 1 5 6 5 5
+ * <p>
+ * Solucion: 1º Oleada
+ *  Defensor: 5  4
+ *  Atacante: 4  3  2
+ *            Gana Defensor: Atacante 3 - 2 = 1
+ * <p>
+ * Solucion: 2º Oleada
+ *  Defensor:  5  1 (Sigue con 2)
+ *  Atacante:  6 (Solo le queda 1 tropa)
+ *             Gana Atacante: Defensor 2 -1 = 1
+ * <p>
+ * Solucion: 3º Oleada
+ *  Defensor:  5 (Solo le queda 1 tropa)
+ *  Atacante:  5 (Solo le queda 1 tropa)
+ *             Gana Defensor: Atacante 1 - 1 = 0
+ * Resultado
+ *      Defensor 2 (-1) = 1
+ *      Atacante 3 (-2 -1) = 0
+ * <p>
+ * Tropas defensor y Tropas Atacante
+ * 1 0
+ * <p>
+ * Entrada
  * 10 10 5 5 2
  * 1 1 1 1 1 1 1 1 1 1 2 2 2 2 2 3 3 3 3 3
+ * <p>
+ * Entrada
  * 4 4 1 4 5
  * 1 1 1 1 1 2 2 2 3 3 1 2 4 4 2 5 5 5 5 6 2
+ *
  * <p>
  * Resultado
  * <p>
@@ -93,4 +128,57 @@ package es.itrafa.ev1_u4.tarea_arrays;
  * Respuesta:(sistema de penalización: 0 %)
  */
 public class Tarea {
+    public static void main(String[] args) {
+        final int MAX_TIRADAS = 200000;
+        Scanner sc = new Scanner(System.in);
+        // datos 1º línea enumerados
+        enum Data {
+            TD, TA, DD, DA, NO;
+        }
+
+        // PRIMERA LÍNEA ENTRADA (DATOS JUEGO Y JUGADORES)
+        // 2 3 3 3 3
+        // String unido
+
+        // Capturamos y separamos string
+        String[] input = sc.nextLine().split(" ");
+
+        // Preparamos array gameData para los valores en int
+        int[] gameData = new int[Data.values().length];
+
+        // pasamos a int y lo guardamos
+        for (int i = 0; i< gameData.length; i++) {
+            gameData[i] = Integer.parseInt(input[i]);
+        }
+
+        // CALCULO TIRADAS POR JUGADOR
+
+        int maxTiradaDefensor = gameData[Data.DD.ordinal()];
+        if(gameData[Data.TD.ordinal()] < gameData[Data.DD.ordinal()]){
+            maxTiradaDefensor = gameData[Data.TD.ordinal()];
+        }
+        int maxTiradaAtacante = gameData[Data.DA.ordinal()];
+        if(gameData[Data.TA.ordinal()] < gameData[Data.DA.ordinal()]){
+            maxTiradaAtacante = gameData[Data.TA.ordinal()];
+        }
+        int maxTiradaDefensorOleadas = maxTiradaDefensor * gameData[Data.NO.ordinal()];
+        int maxTiradaAtacanteOleadas = maxTiradaAtacante * gameData[Data.NO.ordinal()];
+        int tiradasTotales = maxTiradaDefensorOleadas + maxTiradaAtacanteOleadas;
+        System.out.println("Tiradas TOTALES: " + tiradasTotales);
+
+
+        // SEGUNDA LÍNEA ENTRADA (TIRADAS)
+        // 4 5 3 4 2 1 5 6 5 5
+
+        String[] inputTiradas = sc.nextLine().split(" ");
+        int[] tiradas = new int[tiradasTotales];
+
+        for (int i = 0; i< tiradas.length; i++) {
+            gameData[i] = Integer.parseInt(inputTiradas[i]);
+        }
+
+
+
+
+    }
 }

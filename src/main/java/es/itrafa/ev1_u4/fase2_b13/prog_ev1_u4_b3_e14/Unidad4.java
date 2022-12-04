@@ -1,4 +1,4 @@
-package es.itrafa.ev1_u4.fase1_b13.prog_ev1_u4_b3_e14;
+package es.itrafa.ev1_u4.fase2_b13.prog_ev1_u4_b3_e14;
 
 /**
  * Ejercicio U4_B3_E14: Vuelve a escribir el ejemplo anterior con la sintaxis tradicional del
