@@ -53,11 +53,14 @@ package es.itrafa.ev1_u4.fase3_b12.prog_ev1_u3_b12_e1;
  *
  * }</pre>
  */
+enum Palo{
+    Bastos, Copas, Oros, Espadas
+}
 class Carta {
-    private String palo;
+    private Palo palo;
     private int numero;
 
-    public Carta(String palo, int numero) {
+    public Carta(Palo palo, int numero) {
         this.palo = palo;
         this.numero = numero;
     }
@@ -74,14 +77,14 @@ class Baraja {
 
     public Baraja() {
         //crea una baraja ordenada por palos y números
-        String[] palos = {"Bastos", "Copas", "Oros", "Espadas"};
         int ultimaCarta = 0;
-        for (int i = 0; i < 4; i++) {
+        for (Palo p: Palo.values()) {
             for (int j = 0; j < 12; j++) {
                 if (j == 7 || j == 8) {
                     continue;
                 }
-                cartas[ultimaCarta] = new Carta(palos[i], j + 1);
+                cartas[ultimaCarta] = new Carta(p, j + 1);
+
                 ultimaCarta++;
             }
         }
